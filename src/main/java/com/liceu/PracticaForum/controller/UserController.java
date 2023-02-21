@@ -1,21 +1,17 @@
 package com.liceu.PracticaForum.controller;
 
-import ch.qos.logback.core.subst.Token;
 import com.liceu.PracticaForum.form.LoginForm;
 import com.liceu.PracticaForum.form.RegisterForm;
 import com.liceu.PracticaForum.model.User;
 import com.liceu.PracticaForum.service.TokenService;
 import com.liceu.PracticaForum.service.UserService;
 import com.liceu.PracticaForum.utils.EncriptPass;
-import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,22 +26,24 @@ public class UserController {
 
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:8080")
-    public Map<String, String> login(@RequestBody LoginForm loginForm, HttpServletResponse response) {
+    public Map<String, Object> login(@RequestBody LoginForm loginForm, HttpServletResponse response) {
         String password = encriptPass.encritpPass(loginForm.getPassword());
         User user = userService.logUser(loginForm.getEmail(), password);
-        Map<String, String> userMap = new HashMap<>();
+        Map<String, Object> userMap = new HashMap<>();
         if (user == null) {
             userMap.put("message", "Unknown User or Password");
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             return userMap;
         } else {
-            String token = tokenService.newToken(user);
-            userMap.put("name", user.getName());
-            userMap.put("email", user.getEmail());
-            userMap.put("password", user.getPassword());
+            Map<String, Object> permissionMap = userService.getRolePermission(user.getRole());
+
+            userMap = userService.createUserMap(user, permissionMap, userMap);
+//            userMap.put("categories",categoriesMap);
+
+            String token = tokenService.newToken(userMap);
+
             userMap.put("token", token);
             userMap.put("message", "User Logged");
-//            userMap.put("moderateCategory",);
         }
         return userMap;
     }
@@ -70,6 +68,24 @@ public class UserController {
 //            userMap.put("moderateCategory",);
         }
         return userMap;
+    }
+
+    @GetMapping("/getprofile")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public String getProfile(HttpServletRequest request) {
+        Map<String, Object> userMap = new HashMap<>();
+        String payload = (String) request.getAttribute("payload");
+//        Map<String, Object> permissionMap = userService.getRolePermission(user.getRole());
+//
+//        userMap = userService.createUserMap(user, permissionMap, userMap);
+////            userMap.put("categories",categoriesMap);
+//
+//        String token = tokenService.newToken(userMap);
+//
+//        userMap.put("token", token);
+//        userMap.put("message", "User Logged");
+
+        return payload;
     }
 
 
