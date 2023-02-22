@@ -15,6 +15,7 @@ public class User {
     String email;
     String password;
     String role;
+    String userAvatar;
 
     public User(String name, String email, String password, String role) {
         this.name = name;
@@ -24,6 +25,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 
     public String getRole() {

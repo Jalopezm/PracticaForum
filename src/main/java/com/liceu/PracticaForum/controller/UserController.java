@@ -1,5 +1,6 @@
 package com.liceu.PracticaForum.controller;
 
+import com.google.gson.Gson;
 import com.liceu.PracticaForum.form.LoginForm;
 import com.liceu.PracticaForum.form.RegisterForm;
 import com.liceu.PracticaForum.model.User;
@@ -30,22 +31,24 @@ public class UserController {
         String password = encriptPass.encritpPass(loginForm.getPassword());
         User user = userService.logUser(loginForm.getEmail(), password);
         Map<String, Object> userMap = new HashMap<>();
+        Map<String, Object> loginMap = new HashMap<>();
+
         if (user == null) {
             userMap.put("message", "Unknown User or Password");
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             return userMap;
         } else {
             Map<String, Object> permissionMap = userService.getRolePermission(user.getRole());
-
-            userMap = userService.createUserMap(user, permissionMap, userMap);
 //            userMap.put("categories",categoriesMap);
+            userMap = userService.createUserMap(user, permissionMap,userMap);
+            userMap.put("message", "User Logged");
 
             String token = tokenService.newToken(userMap);
 
-            userMap.put("token", token);
-            userMap.put("message", "User Logged");
+            loginMap.put("user", userMap);
+            loginMap.put("token", token);
         }
-        return userMap;
+        return loginMap;
     }
 
     @PostMapping("/register")
@@ -72,9 +75,10 @@ public class UserController {
 
     @GetMapping("/getprofile")
     @CrossOrigin(origins = "http://localhost:8080")
-    public String getProfile(HttpServletRequest request) {
-        Map<String, Object> userMap = new HashMap<>();
+    public Map<String, Object> getProfile(HttpServletRequest request) {
         String payload = (String) request.getAttribute("payload");
+        Gson gson = new Gson();
+        Map<String, Object> mapPayload = gson.fromJson(payload, Map.class);
 //        Map<String, Object> permissionMap = userService.getRolePermission(user.getRole());
 //
 //        userMap = userService.createUserMap(user, permissionMap, userMap);
@@ -85,7 +89,7 @@ public class UserController {
 //        userMap.put("token", token);
 //        userMap.put("message", "User Logged");
 
-        return payload;
+        return mapPayload;
     }
 
 

@@ -25,17 +25,16 @@ public class TokenInterceptor implements HandlerInterceptor {
             return true;
         }
         String authHeader = request.getHeader("Authorization");
-        if (authHeader == null) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        }
-        try {
-            String token = authHeader.replace("Bearer ", "");
-            String payload = tokenService.getPayload(token);
-            byte[] decoded = Base64.getDecoder().decode(payload);
-            String decodedStr = new String(decoded, StandardCharsets.UTF_8);
-            request.setAttribute("payload", decodedStr);
-        } catch (SignatureVerificationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        if (authHeader != null) {
+            try {
+                String token = authHeader.replace("Bearer ", "");
+                String payload = tokenService.getPayload(token);
+                byte[] decoded = Base64.getDecoder().decode(payload);
+                String decodedStr = new String(decoded, StandardCharsets.UTF_8);
+                request.setAttribute("payload", decodedStr);
+            } catch (SignatureVerificationException e) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+            }
         }
         return true;
     }

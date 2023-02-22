@@ -5,8 +5,6 @@ import com.liceu.PracticaForum.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,12 +58,14 @@ public class UserService {
         return null;
     }
 
-    public Map<String, Object> createUserMap(User user,Map<String, Object> permissionMap,  Map<String, Object> userMap) {
+    public Map<String, Object> createUserMap(User user, Map<String, Object> permissionMap, Map<String, Object> userMap) {
+
         userMap.put("role", user.getRole());
         userMap.put("_id", String.valueOf(user.getId()));
         userMap.put("email", user.getEmail());
         userMap.put("name", user.getName());
         userMap.put("permissions", permissionMap);
+        userMap.put("avatarUrl",user.getUserAvatar());
         return userMap;
     }
 
