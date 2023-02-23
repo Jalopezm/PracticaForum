@@ -39,8 +39,8 @@ public class UserController {
             return userMap;
         } else {
             Map<String, Object> permissionMap = userService.getRolePermission(user.getRole());
-//            userMap.put("categories",categoriesMap);
-            userMap = userService.createUserMap(user, permissionMap,userMap);
+//            userMap.put("categories", categoriesMap);
+            userMap = userService.createUserMap(user, permissionMap, userMap);
             userMap.put("message", "User Logged");
 
             String token = tokenService.newToken(userMap);
