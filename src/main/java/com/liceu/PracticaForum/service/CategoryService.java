@@ -53,4 +53,8 @@ public class CategoryService {
 
         return String.valueOf(randomColor);
     }
+
+    public Category getCategoryBySlug(String categorySlug) {
+        return categoryRepo.getCategoryBySlug(categorySlug);
+    }
 }

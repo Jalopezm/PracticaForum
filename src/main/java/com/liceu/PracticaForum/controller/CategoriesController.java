@@ -36,4 +36,11 @@ public class CategoriesController {
         categoryService.newCategory(category);
         return categoryMap;
     }
+
+    @GetMapping("/categories/{categorySlug}")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public Category categorySlug(@PathVariable String categorySlug){
+        Category category = categoryService.getCategoryBySlug(categorySlug);
+        return category;
+    }
 }
