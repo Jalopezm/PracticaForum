@@ -1,9 +1,9 @@
 package com.liceu.PracticaForum.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import javax.annotation.Nullable;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -14,6 +14,16 @@ public class Category {
     String description;
     String slug;
     String color;
+    @OneToMany(mappedBy = "slug")
+    Set<Topic> topicSet;
+
+    public Set<Topic> getTopicSet() {
+        return topicSet;
+    }
+
+    public void setTopicSet(Set<Topic> topicSet) {
+        this.topicSet = topicSet;
+    }
 
     public String getSlug() {
         return slug;

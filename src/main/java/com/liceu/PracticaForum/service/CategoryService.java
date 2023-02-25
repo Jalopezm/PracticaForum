@@ -47,11 +47,7 @@ public class CategoryService {
     public String getColor() {
         Random rand = new Random();
         int r = (int) (rand.nextFloat() * 256);
-        int g = (int) (rand.nextFloat() * 256);
-        int b = (int) (rand.nextFloat() * 256);
-        Color randomColor = new Color(r, g, b);
-
-        return String.valueOf(randomColor);
+        return "hsl("+r+", 50%, 50%)";
     }
 
     public Category getCategoryBySlug(String categorySlug) {
