@@ -79,15 +79,6 @@ public class UserController {
         String payload = (String) request.getAttribute("payload");
         Gson gson = new Gson();
         Map<String, Object> mapPayload = gson.fromJson(payload, Map.class);
-//        Map<String, Object> permissionMap = userService.getRolePermission(user.getRole());
-//
-//        userMap = userService.createUserMap(user, permissionMap, userMap);
-////            userMap.put("categories",categoriesMap);
-//
-//        String token = tokenService.newToken(userMap);
-//
-//        userMap.put("token", token);
-//        userMap.put("message", "User Logged");
 
         return mapPayload;
     }

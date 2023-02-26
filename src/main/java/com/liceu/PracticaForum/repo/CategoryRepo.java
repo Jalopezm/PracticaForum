@@ -9,4 +9,5 @@ public interface CategoryRepo extends JpaRepository<Category,Long> {
     List<Category> findByTitle(String tile);
 
     Category getCategoryBySlug(String categorySlug);
+
 }

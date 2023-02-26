@@ -2,7 +2,7 @@ package com.liceu.PracticaForum.model;
 
 import jakarta.persistence.*;
 
-import javax.annotation.Nullable;
+
 import java.util.Set;
 
 @Entity
@@ -14,15 +14,15 @@ public class Category {
     String description;
     String slug;
     String color;
-    @OneToMany(mappedBy = "slug")
-    Set<Topic> topicSet;
+    @OneToMany(mappedBy = "category")
+    Set<Topic> moderators;
 
-    public Set<Topic> getTopicSet() {
-        return topicSet;
+    public Set<Topic> getModerators() {
+        return moderators;
     }
 
-    public void setTopicSet(Set<Topic> topicSet) {
-        this.topicSet = topicSet;
+    public void setModerators(Set<Topic> moderators) {
+        this.moderators = moderators;
     }
 
     public String getSlug() {

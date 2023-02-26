@@ -1,11 +1,16 @@
 package com.liceu.PracticaForum.controller;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.liceu.PracticaForum.form.CategoryForm;
 import com.liceu.PracticaForum.model.Category;
 import com.liceu.PracticaForum.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +23,9 @@ public class CategoriesController {
     @GetMapping("/categories")
     @CrossOrigin(origins = "http://localhost:8080")
     public List<Category> categories(){
-        List<Category> categories = categoryService.getAllCategories();
-        return categories;
+        return categoryService.getAllCategories();
     }
+
 
     @PostMapping("/categories")
     @CrossOrigin(origins = "http://localhost:8080")
