@@ -68,8 +68,4 @@ public class UserService {
         userMap.put("avatarUrl",user.getUserAvatar());
         return userMap;
     }
-
-    public User getUser(String userName) {
-       return userRepo.getUserByEmail(userName);
-    }
 }

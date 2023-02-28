@@ -67,6 +67,7 @@ public class UserController {
             userMap.put("name", user.getName());
             userMap.put("email", user.getEmail());
             userMap.put("password", user.getPassword());
+            userMap.put("avatarUrl", "");
             userMap.put("message", "User Created");
 //            userMap.put("moderateCategory",);
         }
@@ -79,7 +80,6 @@ public class UserController {
         String payload = (String) request.getAttribute("payload");
         Gson gson = new Gson();
         Map<String, Object> mapPayload = gson.fromJson(payload, Map.class);
-
         return mapPayload;
     }
 

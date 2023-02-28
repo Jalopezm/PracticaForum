@@ -14,16 +14,8 @@ public class Category {
     String description;
     String slug;
     String color;
-    @OneToMany(mappedBy = "category")
-    Set<Topic> moderators;
+//    Set<Moderators> moderators;
 
-    public Set<Topic> getModerators() {
-        return moderators;
-    }
-
-    public void setModerators(Set<Topic> moderators) {
-        this.moderators = moderators;
-    }
 
     public String getSlug() {
         return slug;
