@@ -1,9 +1,8 @@
 package com.liceu.PracticaForum.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class User {
@@ -14,7 +13,17 @@ public class User {
     String email;
     String password;
     String role;
-    String userAvatar;
+    String userAvatar = "";
+    @OneToMany(mappedBy = "user")
+    Set<Topic> topicSet;
+
+    public Set<Topic> getTopicSet() {
+        return topicSet;
+    }
+
+    public void setTopicSet(Set<Topic> topicSet) {
+        this.topicSet = topicSet;
+    }
 
     public User(String name, String email, String password, String role) {
         this.name = name;

@@ -6,11 +6,8 @@ import com.liceu.PracticaForum.repo.CategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 @Service
 public class CategoryService {
@@ -47,10 +44,24 @@ public class CategoryService {
     public String getColor() {
         Random rand = new Random();
         int r = (int) (rand.nextFloat() * 256);
-        return "hsl("+r+", 50%, 50%)";
+        return "hsl(" + r + ", 50%, 50%)";
     }
 
     public Category getCategoryBySlug(String categorySlug) {
         return categoryRepo.getCategoryBySlug(categorySlug);
+    }
+
+    public Object createCategoryMapPermisions() {
+        List<Category> categories = categoryRepo.findAll();
+        Map<String, Object> categoryMap = new HashMap<>();
+        for (Category category : categories) {
+            categoryMap.put(category.getSlug(), new String[]{
+                    "categories_topics:write",
+                    "categories_topics:delete",
+                    "categories_replies:write",
+                    "categories_replies:delete"
+            });
+        }
+        return categoryMap;
     }
 }

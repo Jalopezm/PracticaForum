@@ -25,7 +25,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             return true;
         }
         String authHeader = request.getHeader("Authorization");
-        if (authHeader == null) {
+        if (authHeader != null) {
             try {
                 String token = authHeader.replace("Bearer ", "");
                 String payload = tokenService.getPayload(token);

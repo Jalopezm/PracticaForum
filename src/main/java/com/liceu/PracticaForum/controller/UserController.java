@@ -39,7 +39,6 @@ public class UserController {
             return userMap;
         } else {
             Map<String, Object> permissionMap = userService.getRolePermission(user.getRole());
-//            userMap.put("categories", categoriesMap);
             userMap = userService.createUserMap(user, permissionMap, userMap);
             userMap.put("message", "User Logged");
 
@@ -68,6 +67,7 @@ public class UserController {
             userMap.put("email", user.getEmail());
             userMap.put("password", user.getPassword());
             userMap.put("avatarUrl", "");
+            userMap.put("__v","0"   );
             userMap.put("message", "User Created");
 //            userMap.put("moderateCategory",);
         }
