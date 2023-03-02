@@ -49,12 +49,11 @@ public class TopicService {
     }
 
     public Map<String, Object> createCompleteTopicMap(String topicId, Category category, Map<String, Object> topicMap) {
-
-//        Map<String,Object> userMap = new HashMap<>();
-//        Map<String, Object> permissionMap = userService.getRolePermission(topic.getUser().getRole());
-//        userMap = userService.createUserMap(topic.getUser(),permissionMap,userMap);
-//        topicMap.put("user", userMap);
         Topic topic = topicRepo.getTopicById(topicId);
+        Map<String,Object> userMap = new HashMap<>();
+        Map<String, Object> permissionMap = userService.getRolePermission(topic.getUser().getRole());
+        userMap = userService.createUserMap(topic.getUser(),permissionMap,userMap);
+        topicMap.put("user", userMap);
 
         Map<String, Object> categoryMap = new HashMap<>();
         categoryMap.put("description", category.getDescription());

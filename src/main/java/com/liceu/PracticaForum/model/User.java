@@ -14,17 +14,6 @@ public class User {
     String password;
     String role;
     String userAvatar = "";
-    @OneToMany(mappedBy = "user")
-    Set<Topic> topicSet;
-
-    public Set<Topic> getTopicSet() {
-        return topicSet;
-    }
-
-    public void setTopicSet(Set<Topic> topicSet) {
-        this.topicSet = topicSet;
-    }
-
     public User(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;

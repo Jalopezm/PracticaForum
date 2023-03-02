@@ -48,16 +48,13 @@ public class TopicController {
         topic.setCreatedAt(String.valueOf(Timestamp.from(Instant.now())));
         topic.setModifiedAt(String.valueOf(Timestamp.from(Instant.now())));
         topic.setUser((User) userService.getUser(request));
-
         topic.setCategory(category);
 
         topicService.saveTopic(topic);
 
 
         Map<String, Object> topicMap = new HashMap<>();
-        topicMap = topicService.createTopicMap(topic, topicMap, String.valueOf(topic.getId()), category);
-
-        return topicMap;
+        return topicService.createTopicMap(topic, topicMap, String.valueOf(topic.getId()), category);
     }
 
     @GetMapping("/topics/{topicId}")

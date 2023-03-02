@@ -22,6 +22,7 @@ public class Topic {
     @JoinColumn(name="user_id")
     User user;
 
+
     public User getUser() {
         return user;
     }
