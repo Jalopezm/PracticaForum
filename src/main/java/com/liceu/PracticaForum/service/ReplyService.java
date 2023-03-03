@@ -34,11 +34,30 @@ public class ReplyService {
             replyMap.put("id", reply.getId());
             replyMap.put("content", reply.getContent());
             replyMap.put("user", userMap);
-            replyMap.put("createdAt", topic.getCreatedAt());
-            replyMap.put("modifiedAt", topic.getModifiedAt());
+            replyMap.put("createdAt", reply.getCreatedAt());
+            replyMap.put("modifiedAt", reply.getModifiedAt());
             replyList.add(replyMap);
         }
         return replyList;
+    }
+
+    public void saveReply(Reply reply) {
+        replyRepo.save(reply);
+    }
+
+    public Map<String, Object> createReplyMap(Topic topic, Reply reply, Map<String, Object> replyMap) {
+        replyMap.put("views", 0);
+        replyMap.put("__v", 0);
+        replyMap.put("topicId",topic.getId());
+        replyMap.put("_id", reply.getId());
+        replyMap.put("content", reply.getContent());
+        replyMap.put("reply", reply.getId());
+        replyMap.put("user", reply.getUser());
+        replyMap.put("message", "");
+        replyMap.put("createdAt",reply.getCreatedAt());
+        replyMap.put("modifiedAt", reply.getModifiedAt());
+        replyMap.put("id", reply.getId());
+        return  replyMap;
     }
 }
 

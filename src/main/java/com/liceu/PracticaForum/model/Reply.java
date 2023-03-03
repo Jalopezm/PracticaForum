@@ -8,10 +8,17 @@ public class Reply {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String content;
+    String createdAt;
+    String modifiedAt;
+
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
     Topic topic;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    User user;
 
     public Long getId() {
         return id;
@@ -19,6 +26,22 @@ public class Reply {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(String modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 
     public String getContent() {
@@ -35,5 +58,13 @@ public class Reply {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

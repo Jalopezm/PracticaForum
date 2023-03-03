@@ -72,6 +72,7 @@ public class TopicService {
         topicMap.put("content", topic.getContent());
         topicMap.put("title", topic.getTitle());
         topicMap.put("id", topicId);
+        topicMap.put("_id", topicId);
         topicMap.put("category", categoryMap);
         return topicMap;
     }
