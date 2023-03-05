@@ -20,7 +20,7 @@ public class UserService {
     @Autowired
     TokenService tokenService;
     @Autowired
-    CategoryService categoryService;
+    CategoryRepo categoryRepo;
 
     public void addUser(User user) {
         userRepo.save(user);
@@ -68,7 +68,7 @@ public class UserService {
         rootMap.put("root", rootArrayPermission);
         userMap.put("root", userArrayPermission);
         modMap.put("root",modArrayPermission);
-        rootMap.put("categories", categoryService.createCategoryMapPermisions());
+        rootMap.put("categories", createCategoryMapPermisions());
         switch (role) {
             case "admin" -> {
                 return rootMap;
@@ -81,6 +81,20 @@ public class UserService {
             }
         }
         return null;
+    }
+
+    private Object createCategoryMapPermisions() {
+        List<Category> categories = categoryRepo.findAll();
+        Map<String, Object> categoryMap = new HashMap<>();
+        for (Category category : categories) {
+            categoryMap.put(category.getSlug(), new String[]{
+                    "categories_topics:write",
+                    "categories_topics:delete",
+                    "categories_replies:write",
+                    "categories_replies:delete"
+            });
+        }
+        return categoryMap;
     }
 
     public Map<String, Object> createUserMap(User user, Map<String, Object> permissionMap, Map<String, Object> userMap) {

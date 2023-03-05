@@ -38,6 +38,7 @@ public class CategoryService {
         User newUser = new User();
         newUser.setEmail(user.getEmail());
         newUser.setName(user.getName());
+        newUser.setId(user.getId());
         category.setUser(newUser);
 
         categoryRepo.save(category);
@@ -72,20 +73,6 @@ public class CategoryService {
 
     public Category getCategoryBySlug(String categorySlug) {
         return categoryRepo.getCategoryBySlug(categorySlug);
-    }
-
-    public Object createCategoryMapPermisions() {
-        List<Category> categories = categoryRepo.findAll();
-        Map<String, Object> categoryMap = new HashMap<>();
-        for (Category category : categories) {
-            categoryMap.put(category.getSlug(), new String[]{
-                    "categories_topics:write",
-                    "categories_topics:delete",
-                    "categories_replies:write",
-                    "categories_replies:delete"
-            });
-        }
-        return categoryMap;
     }
 
     public void updateCategory(String categorySlug, CategoryForm categoryForm) {
