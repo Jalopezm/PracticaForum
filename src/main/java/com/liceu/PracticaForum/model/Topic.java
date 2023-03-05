@@ -20,7 +20,6 @@ public class Topic {
     int views;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "category_id")
     Category category;
 

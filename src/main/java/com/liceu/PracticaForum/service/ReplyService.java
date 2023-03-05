@@ -56,13 +56,16 @@ public class ReplyService {
     }
 
     public Map<String, Object> createReplyMap(Topic topic, Reply reply, Map<String, Object> replyMap) {
+        Map<String, Object> userMap = new HashMap<>();
+        Map<String, Object> permissionMap = userService.getRolePermission(topic.getUser().getRole());
+        userMap = userService.createUserMap(topic.getUser(), permissionMap, userMap);
         replyMap.put("views", 0);
         replyMap.put("__v", 0);
         replyMap.put("topicId",topic.getId());
         replyMap.put("_id", reply.getId());
         replyMap.put("content", reply.getContent());
         replyMap.put("reply", reply.getId());
-        replyMap.put("user", reply.getUser());
+        replyMap.put("user", userMap);
         replyMap.put("message", "");
         replyMap.put("createdAt",reply.getCreatedAt());
         replyMap.put("modifiedAt", reply.getModifiedAt());

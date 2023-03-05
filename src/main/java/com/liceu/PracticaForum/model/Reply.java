@@ -12,7 +12,7 @@ public class Reply {
     String modifiedAt;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "topic_id")
     Topic topic;
 
