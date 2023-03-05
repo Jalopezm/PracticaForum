@@ -42,13 +42,7 @@ public class TopicController {
 
         Category category = categoryService.getCategoryBySlug(topicForm.getCategory());
 
-        Topic topic = new Topic();
-        topic.setTitle(topicForm.getTitle());
-        topic.setContent(topicForm.getContent());
-        topic.setCreatedAt(String.valueOf(Timestamp.from(Instant.now())));
-        topic.setModifiedAt(String.valueOf(Timestamp.from(Instant.now())));
-        topic.setUser((User) userService.getUser(request));
-        topic.setCategory(category);
+        Topic topic = topicService.newTopic(topicForm, category, request);
 
         topicService.saveTopic(topic);
 
@@ -70,4 +64,15 @@ public class TopicController {
         return topicMap;
     }
 
+    @PutMapping("/topics/{topicId}")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public void updateTopic(@PathVariable String topicId, @RequestBody TopicForm topicForm) {
+        topicService.updateTopic(topicId, topicForm);
+    }
+
+    @DeleteMapping("/topics/{topicId}")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public Boolean deleteTopic(@PathVariable String topicId, HttpServletRequest request) {
+        return topicService.deleteTopic(topicId, (User) userService.getUser(request));
+    }
 }

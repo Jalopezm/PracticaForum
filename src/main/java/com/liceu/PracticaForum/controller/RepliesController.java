@@ -33,7 +33,6 @@ public class RepliesController {
         List<Reply> replyList = replyService.getAllReplyByTopicID(topicId);
         Topic topic = topicService.getTopicById(topicId);
 
-
         return replyService.createStartReplyMap(replyList, topic);
     }
 
@@ -41,17 +40,26 @@ public class RepliesController {
     @CrossOrigin(origins = "http://localhost:8080")
     public Map<String, Object> setReplies(@PathVariable String topicId, @RequestBody ReplyForm replyForm, HttpServletRequest request) {
         Topic topic = topicService.getTopicById(topicId);
-        Reply reply = new Reply();
-        reply.setContent(replyForm.getContent());
-        reply.setCreatedAt(String.valueOf(Timestamp.from(Instant.now())));
-        reply.setModifiedAt(String.valueOf(Timestamp.from(Instant.now())));
-        reply.setUser((User) userService.getUser(request));
-        reply.setTopic(topic);
+        Reply reply = replyService.createReply(replyForm, request, topic);
+        replyService.newReply(reply);
 
-        replyService.saveReply(reply);
         Map<String, Object> replyMap = new HashMap<>();
-        return  replyService.createReplyMap(topic,reply,replyMap);
+        return replyService.createReplyMap(topic, reply, replyMap);
 
     }
+
+    @PutMapping("/topics/{topicId}/replies/{replyId}")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public void updateReplies(@PathVariable String topicId, @PathVariable String replyId, @RequestBody ReplyForm replyForm) {
+        replyService.updateReply(topicId, replyForm.getContent(), replyId);
+
+    }
+
+    @DeleteMapping("/topics/{topicId}/replies/{replyId}")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public boolean deleteReplies(@PathVariable String topicId, @PathVariable String replyId, HttpServletRequest request) {
+        return replyService.deleteReplies(replyId, (User) userService.getUser(request));
+    }
+
 
 }

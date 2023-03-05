@@ -42,6 +42,8 @@ public class UserService {
 
     public Map<String, Object> getRolePermission(String role) {
         Map<String, Object> rootMap = new HashMap<>();
+        Map<String, Object> userMap = new HashMap<>();
+        Map<String, Object> modMap = new HashMap<>();
         String[] rootArrayPermission = new String[]{
                 "own_topics:write",
                 "own_topics:delete",
@@ -50,24 +52,38 @@ public class UserService {
                 "categories:write",
                 "categories:delete"
         };
+        String[] userArrayPermission = new String[]{
+                "own_topics:write",
+                "own_topics:delete",
+                "own_replies:write",
+                "own_replies:delete"
+        };
+        String[] modArrayPermission = new String[]{
+                "own_topics:write",
+                "own_topics:delete",
+                "own_replies:write",
+                "own_replies:delete"
+        };
+
         rootMap.put("root", rootArrayPermission);
+        userMap.put("root", userArrayPermission);
+        modMap.put("root",modArrayPermission);
         rootMap.put("categories", categoryService.createCategoryMapPermisions());
         switch (role) {
             case "admin" -> {
                 return rootMap;
             }
             case "mod" -> {
-                return null;
+                return modMap;
             }
             case "user" -> {
-                return null;
+                return userMap;
             }
         }
         return null;
     }
 
     public Map<String, Object> createUserMap(User user, Map<String, Object> permissionMap, Map<String, Object> userMap) {
-
         userMap.put("role", user.getRole());
         userMap.put("_id", String.valueOf(user.getId()));
         userMap.put("id", String.valueOf(user.getId()));
@@ -94,5 +110,26 @@ public class UserService {
         Map<String, Object> userMap = getCurrentUserMap(request);
         User user = userRepo.getUserByEmail((String) userMap.get("email"));
         return user;
+    }
+
+    public void updateProfile(String name, String email, User user) {
+        userRepo.updateProfile(name,email,user.getId());
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepo.getUserByEmail(email);
+    }
+
+    public void updatePassword(String encritpPass, User user) {
+        userRepo.updatePassword(encritpPass,user.getId());
+    }
+
+    public void addMapValues(Map<String, Object> userMap, User user) {
+        userMap.put("name", user.getName());
+        userMap.put("email", user.getEmail());
+        userMap.put("password", user.getPassword());
+        userMap.put("avatarUrl", "");
+        userMap.put("__v", 0);
+        userMap.put("message", "User Created");
     }
 }

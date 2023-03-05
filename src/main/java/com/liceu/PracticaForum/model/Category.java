@@ -2,8 +2,8 @@ package com.liceu.PracticaForum.model;
 
 import jakarta.persistence.*;
 
-
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -14,8 +14,9 @@ public class Category {
     String description;
     String slug;
     String color;
-//    Set<Moderators> moderators;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    User user;
 
     public String getSlug() {
         return slug;
@@ -66,4 +67,13 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

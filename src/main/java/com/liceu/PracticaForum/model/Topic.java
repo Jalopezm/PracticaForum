@@ -1,8 +1,12 @@
 package com.liceu.PracticaForum.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Topic {
@@ -13,11 +17,15 @@ public class Topic {
     String content;
     String createdAt;
     String modifiedAt;
+    int views;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "category_id")
     Category category;
 
+    @OneToMany(mappedBy = "topic",cascade = CascadeType.ALL)
+    List<Reply> replyList = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
@@ -79,4 +87,19 @@ public class Topic {
         this.content = content;
     }
 
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public List<Reply> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<Reply> replyList) {
+        this.replyList = replyList;
+    }
 }

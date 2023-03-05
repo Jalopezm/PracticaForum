@@ -25,6 +25,7 @@ public class TokenService {
     }
 
     public String getPayload(String token) {
+        if(token.equals("null"))return null;
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(tokenSecret.getBytes()))
                 .build()
                 .verify(token);

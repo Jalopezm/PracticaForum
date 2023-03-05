@@ -1,7 +1,12 @@
 package com.liceu.PracticaForum.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +18,10 @@ public class User {
     String email;
     String password;
     String role;
-    String userAvatar = "";
+    String userAvatar;
+
+
+
     public User(String name, String email, String password, String role) {
         this.name = name;
         this.email = email;
@@ -71,4 +79,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
